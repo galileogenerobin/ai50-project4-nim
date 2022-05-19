@@ -103,7 +103,7 @@ class NimAI():
         """
         # Look up the state and action from the q dictionary
         try:
-            q_value = self.q[(state, action)]
+            q_value = self.q[(tuple(state), action)]
         except KeyError:
             # If state, action pair is not yet in dictionary, return 0
             q_value = 0
@@ -128,7 +128,7 @@ class NimAI():
         """
 
         # Update the self.q dictionary
-        self.q[(state, action)] = old_q + self.alpha * (reward + future_rewards - old_q)
+        self.q[(tuple(state), action)] = old_q + self.alpha * (reward + future_rewards - old_q)
 
         # raise NotImplementedError
 
@@ -146,7 +146,7 @@ class NimAI():
         # Get the set of actions available for the given state
         actions = Nim.available_actions(state)
         # If actions are available, query their q values and get the maximum
-        if actions is not None:
+        if not actions == set():
             rewards = max([self.get_q_value(state, action) for action in actions])
 
         return rewards
