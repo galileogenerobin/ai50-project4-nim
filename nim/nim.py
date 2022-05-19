@@ -167,12 +167,12 @@ class NimAI():
         If multiple actions have the same Q-value, any of those
         options is an acceptable return value.
         """
-        # Get the set of actions available for the given state
-        actions = Nim.available_actions(state)
+        # Get the set of actions available for the given state and convert it into a list so we can run random.choice on it
+        actions = list(Nim.available_actions(state))
 
         if epsilon:
             # If epsilon is True, with probability of self.epsilon, choose a random action
-            if random.choices([True, False], cum_weights=[self.epsilon, 1]):
+            if random.choices([True, False], cum_weights=[self.epsilon, 1])[0]:
                 return random.choice(actions)
         
         # Else, get the max q value from the available actions
